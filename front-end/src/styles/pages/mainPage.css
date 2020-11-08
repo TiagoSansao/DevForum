@@ -1,3 +1,23 @@
 .topics {
+  margin: 15px auto 15px auto;
   background-color: #01012b;
+  border-radius: 5px;
+  border: 1px solid #ff2a6d;
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+}
+
+.topics h2 {
+  color: white;
+  padding: 5px;
+}
+
+.topic {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #ff2a6d;
+  border-bottom: 1px solid #ff2a6d;
+  color: white;
 }

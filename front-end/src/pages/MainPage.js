@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 import Header from '../components/Header';
+import '../styles/pages/mainPage.css';
 
 const MainPage = () => {
   const [topics, setTopics] = useState([]);
