@@ -19,7 +19,7 @@ const topicSchema = mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, reqired: true },
   author: { type: String, required: true },
-  date: { type: String, required: true },
+  date: { type: Date, required: true },
   category: { type: String, required: true },
 });
 
@@ -42,11 +42,13 @@ app.get('/topics', (req, res) => {
     });
 });
 
-app.get('/topics/:topic', (req, res) => {});
+app.get('/topics/:topic', (req, res) => {
+  res.send('oi');
+});
 
 app.post('/topic', (req, res) => {
   const { title, content, author, category } = req.body;
-  const date = new Date().toUTCString();
+  const date = new Date();
   const topicData = {
     title: title,
     content: content,
