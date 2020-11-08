@@ -20,6 +20,7 @@ const topicSchema = mongoose.Schema({
   content: { type: String, reqired: true },
   author: { type: String, required: true },
   date: { type: String, required: true },
+  category: { type: String, required: true },
 });
 
 const Topic = mongoose.model('Topic', topicSchema);
@@ -36,7 +37,7 @@ app.get('/topics', (req, res) => {
   Topic.find()
     .limit(10)
     .exec((err, results) => {
-      if (err) return console.log(err);
+      if (err) return res.status(400).json({ status: 'failed' });
       res.status(200).json(results);
     });
 });
@@ -44,17 +45,18 @@ app.get('/topics', (req, res) => {
 app.get('/topics/:topic', (req, res) => {});
 
 app.post('/topic', (req, res) => {
-  const { title, content, author } = req.body;
+  const { title, content, author, category } = req.body;
   const date = new Date().toUTCString();
   const topicData = {
     title: title,
     content: content,
     author: author,
     date: date,
+    category: category,
   };
   const newTopic = new Topic(topicData);
   newTopic.save((err) => {
-    if (err) return console.log(err);
+    if (err) return res.status(400).json({ status: 'failed' });
     res.status(200).json({ status: 'success' });
   });
 });
