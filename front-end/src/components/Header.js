@@ -1,13 +1,16 @@
 import React from 'react';
 import '../styles/components/header.css';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
     <header>
       <main className='top'>
         <div className='topLeft'>
-          <h1>DevForum</h1>
-          <h2>The forum made for developers!</h2>
+          <Link to='/'>
+            <h1>DevForum</h1>
+            <h2>The forum made for developers!</h2>
+          </Link>
         </div>
       </main>
       <section className='down'>

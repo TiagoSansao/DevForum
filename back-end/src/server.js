@@ -43,7 +43,10 @@ app.get('/topics', (req, res) => {
 });
 
 app.get('/topics/:topic', (req, res) => {
-  res.send('oi');
+  Topic.findById(req.params.topic, (err, result) => {
+    if (err) return res.status(400).json({ status: 'failed' });
+    res.status(200).json(result);
+  });
 });
 
 app.post('/topic', (req, res) => {

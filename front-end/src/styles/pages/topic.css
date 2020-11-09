@@ -1,0 +1,17 @@
+.loading {
+  color: #05d9e8;
+  position: absolute;
+  font-family: 'Roboto', sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+.loading h3 {
+  font-size: 3.5rem;
+  text-align: center;
+}
+.loading h4 {
+  font-size: 2rem;
+}

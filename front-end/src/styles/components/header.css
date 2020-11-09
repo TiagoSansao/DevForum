@@ -1,6 +1,5 @@
 header {
   background: linear-gradient(#2f2ff7, #04047a);
-  color: #05d9e8;
   font-family: 'Orbitron', sans-serif;
   text-shadow: 1px 1px 5px #005678;
   border-bottom: 1px solid #ff2a6d;
@@ -11,9 +10,11 @@ header {
 }
 .top h1 {
   font-size: 2.5rem;
+  color: #05d9e8;
 }
 .top h2 {
   font-size: 1.5rem;
+  color: #05d9e8;
 }
 .down {
   display: flex;
