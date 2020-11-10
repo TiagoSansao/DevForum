@@ -11,11 +11,15 @@ const Topic = () => {
   const [topic, setTopic] = useState(null);
   const [replyContent, setReplyContent] = useState('');
 
-  useEffect(() => {
+  function apiCall() {
     api.get(`/topics/${params.topicId}`).then((response) => {
       setTopic(response.data);
       console.log(response.data.replies);
     });
+  }
+
+  useEffect(() => {
+    apiCall();
   }, [params.topicId]);
 
   async function handleReplySybmit(e) {
@@ -25,7 +29,12 @@ const Topic = () => {
       content: replyContent,
     };
     await api.post('/reply', data);
+    await apiCall();
+    setReplyContent('');
+    console.log('chego aq');
   }
+
+  console.log('tá atualizando');
 
   if (!topic) {
     return (

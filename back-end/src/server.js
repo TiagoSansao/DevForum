@@ -65,6 +65,7 @@ app.post('/reply', (req, res) => {
     result.replies.push(data);
     result.save((err) => {
       if (err) console.log(err);
+      res.status(200).json({ status: 'success' });
     });
   });
 });
