@@ -9,13 +9,23 @@ import { getTimeAgo } from '../utils/getTimeAgo';
 const Topic = () => {
   const params = useParams();
   const [topic, setTopic] = useState(null);
+  const [replyContent, setReplyContent] = useState('');
 
   useEffect(() => {
     api.get(`/topics/${params.topicId}`).then((response) => {
       setTopic(response.data);
-      console.log(response);
+      console.log(response.data.replies);
     });
   }, [params.topicId]);
+
+  async function handleReplySybmit(e) {
+    e.preventDefault();
+    const data = {
+      topic: topic._id,
+      content: replyContent,
+    };
+    await api.post('/reply', data);
+  }
 
   if (!topic) {
     return (
@@ -37,12 +47,12 @@ const Topic = () => {
           <h2>{topic.title}</h2>
           <div>
             <h3>{topic.category}</h3>
-            <time>{getTimeAgo(topic.date)}</time>
+            <time dateTime={topic.date}>{getTimeAgo(topic.date)}</time>
           </div>
         </header>
         <main>{topic.content}</main>
         <aside>
-          <cite>{topic.author}</cite>
+          <cite className='authorName'>{topic.author}</cite>
           <img src={defaultUserImage} alt='' />
           <div>
             <span>informações</span> <br />
@@ -50,6 +60,38 @@ const Topic = () => {
           </div>
         </aside>
       </article>
+      {topic.replies.map((reply) => {
+        return (
+          <article key={reply._id} className='singleTopic'>
+            <header>
+              <div>
+                <time>{getTimeAgo(reply.date)}</time>
+              </div>
+            </header>
+            <main>{reply.content}</main>
+            <aside>
+              <cite className='authorName'>{reply.author}</cite>
+              <img src={defaultUserImage} alt='' />
+              <div>
+                <span>informações</span> <br />
+                <span>daoras</span>
+              </div>
+            </aside>
+          </article>
+        );
+      })}
+      <form method='post' className='replyForm' onSubmit={handleReplySybmit}>
+        <h2>Your reply</h2>
+        <textarea
+          maxLength={2048}
+          value={replyContent}
+          onChange={(e) => {
+            setReplyContent(e.target.value);
+          }}
+          placeholder="Type your reply to this post here, don't be shy :D"
+        />
+        <input type='submit' />
+      </form>
     </main>
   );
 };

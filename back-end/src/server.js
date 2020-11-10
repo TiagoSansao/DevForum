@@ -21,6 +21,13 @@ const topicSchema = mongoose.Schema({
   author: { type: String, required: true },
   date: { type: Date, required: true },
   category: { type: String, required: true },
+  replies: [
+    {
+      author: { type: String },
+      content: { type: String },
+      date: { type: Date },
+    },
+  ],
 });
 
 const Topic = mongoose.model('Topic', topicSchema);
@@ -46,6 +53,19 @@ app.get('/topics/:topic', (req, res) => {
   Topic.findById(req.params.topic, (err, result) => {
     if (err) return res.status(400).json({ status: 'failed' });
     res.status(200).json(result);
+  });
+});
+
+app.post('/reply', (req, res) => {
+  const { content, topic } = req.body;
+  const author = 'Seu Madruga'; // temporary
+  const data = { author: author, content: content, date: new Date() };
+  Topic.findById(topic, (err, result) => {
+    if (err) return res.status(400).json({ status: 'Invalid topic ID.' });
+    result.replies.push(data);
+    result.save((err) => {
+      if (err) console.log(err);
+    });
   });
 });
 
