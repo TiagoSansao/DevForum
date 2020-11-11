@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGOOSE_URI, {
 const topicSchema = mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, reqired: true },
-  author: { type: String, required: true },
+  authorId: { type: String, required: true },
   date: { type: Date, required: true },
   category: { type: String, required: true },
   replies: [
@@ -30,6 +30,15 @@ const topicSchema = mongoose.Schema({
   ],
 });
 
+const userSchema = mongoose.Schema({
+  username: { type: String, min: 3, max: 20, required: true },
+  password: { type: String, min: 5, max: 256, required: true },
+  email: { type: String, required: true, min: 5, max: 256 },
+  registerDate: { type: Date, required: true },
+  birthday: { type: Date, required: true },
+});
+
+const User = mongoose.model('User', userSchema);
 const Topic = mongoose.model('Topic', topicSchema);
 
 // MIDDLEWARES
@@ -76,7 +85,7 @@ app.post('/topic', (req, res) => {
   const topicData = {
     title: title,
     content: content,
-    author: author,
+    authorId: author,
     date: date,
     category: category,
   };
@@ -85,6 +94,42 @@ app.post('/topic', (req, res) => {
     if (err) return res.status(400).json({ status: 'failed' });
     res.status(200).json({ status: 'success' });
   });
+});
+
+app.post('/register', (req, res) => {
+  const { user, password, email, birthday } = req.body;
+  const date = new Date();
+  User.findOne(
+    { $or: [{ username: user }, { email: email }] },
+    (err, result) => {
+      if (err) return console.log(err);
+      console.log(result);
+      if (result) {
+        if (result.email === email && result.username === user) {
+          res
+            .status(250)
+            .json({ status: 'This email and name are already in use.' });
+        } else if (result.username === user) {
+          res.status(250).json({ status: 'This name is already in use.' });
+        } else {
+          res.status(250).json({ status: 'This email is already in use.' });
+        }
+      } else {
+        const userData = {
+          username: user,
+          password: password,
+          email: email,
+          registerDate: date,
+          birthday: new Date(birthday),
+        };
+        const newUser = new User(userData);
+        newUser.save((err) => {
+          if (err) return res.status(400).json({ status: 'failed' });
+          res.status(200).json({ status: 'success' });
+        });
+      }
+    }
+  );
 });
 
 // TURNING THE SERVER ON

@@ -1,0 +1,64 @@
+.fullscreen {
+  width: 100vw;
+  height: 100vh;
+}
+
+.register {
+  background-color: #01012b;
+  width: 300px;
+  height: 370px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px 10px 20px;
+  border: 1px solid #d1f7ff;
+}
+
+.register h2 {
+  color: #ff2a6d;
+  text-align: center;
+  font-size: 2rem;
+  border-bottom: 1px solid #d1f7ff;
+  padding-bottom: 3px;
+  margin-bottom: 10px;
+}
+
+.inputDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0px 5px 0px;
+  align-items: center;
+}
+
+.inputDiv input {
+  width: 100%;
+  padding: 0px 5px 0px 5px;
+  outline: none;
+  height: 30px;
+}
+
+.inputDiv label {
+  color: white;
+  font-size: 1rem;
+  align-self: flex-start;
+}
+
+.inputDiv #birthday {
+  text-align: center;
+}
+
+.register #submit {
+  background-color: #0016ee;
+  border: 1px solid black;
+  width: 150px;
+  height: 40px;
+  margin: auto;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.5s;
+}
+
+.register #submit:hover {
+  background-color: #283dff;
+}

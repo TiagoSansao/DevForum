@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/components/header.css';
 import { Link } from 'react-router-dom';
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header id='topHeader'>
       <main className='top'>
@@ -19,8 +19,22 @@ const Header = () => {
           <input type='submit' value='Search' />
         </form>
         <section className='downRight'>
-          <a href=''>Sign in</a>
-          <a href=''>Sign up</a>
+          <Link
+            to='login'
+            style={
+              props.where === 'login' ? { backgroundColor: '#27ae60' } : {}
+            }
+          >
+            Sign in
+          </Link>
+          <Link
+            to='register'
+            style={
+              props.where === 'register' ? { backgroundColor: ' #020258' } : {}
+            }
+          >
+            Sign up
+          </Link>
         </section>
       </section>
     </header>
