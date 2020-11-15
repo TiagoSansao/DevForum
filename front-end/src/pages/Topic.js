@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import Header from '../components/Header';
 import '../styles/pages/topic.css';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import defaultUserImage from '../assets/default-user-image.png';
 import { getTimeAgo } from '../utils/getTimeAgo';
 
@@ -34,8 +34,6 @@ const Topic = () => {
     console.log('chego aq');
   }
 
-  console.log('tá atualizando');
-
   if (!topic) {
     return (
       <main>
@@ -61,11 +59,17 @@ const Topic = () => {
         </header>
         <main>{topic.content}</main>
         <aside>
-          <cite className='authorName'>{topic.author}</cite>
+          <Link to={`user/${topic.author.username}`} className='authorName'>
+            {topic.author.username}
+          </Link>
           <img src={defaultUserImage} alt='' />
-          <div>
-            <span>informações</span> <br />
-            <span>daoras</span>
+          <div className='personInfo'>
+            <span>
+              Register: {new Date(topic.author.registerDate).getMonth()}/
+              {new Date(topic.author.registerDate).getDay()}/
+              {new Date(topic.author.registerDate).getFullYear()}
+            </span>{' '}
+            <br />
           </div>
         </aside>
       </article>
@@ -79,11 +83,17 @@ const Topic = () => {
             </header>
             <main>{reply.content}</main>
             <aside>
-              <cite className='authorName'>{reply.author}</cite>
+              <Link to={`user/${topic.author.username}`} className='authorName'>
+                {topic.author.username}
+              </Link>
               <img src={defaultUserImage} alt='' />
-              <div>
-                <span>informações</span> <br />
-                <span>daoras</span>
+              <div className='personInfo'>
+                <span>
+                  Register: {new Date(reply.author.registerDate).getMonth()}/
+                  {new Date(reply.author.registerDate).getDay()}/
+                  {new Date(reply.author.registerDate).getFullYear()}
+                </span>{' '}
+                <br />
               </div>
             </aside>
           </article>

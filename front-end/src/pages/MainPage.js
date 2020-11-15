@@ -28,7 +28,9 @@ const MainPage = () => {
                 <h3>{topic.title}</h3>
               </Link>
               <span className='topicInfo'>
-                <cite>{topic.author}</cite>
+                <Link to={`user/${topic.author.username}`}>
+                  {topic.author.username}
+                </Link>
                 <time dateTime={topic.date}>{getTimeAgo(topic.date)}</time>
               </span>
             </div>

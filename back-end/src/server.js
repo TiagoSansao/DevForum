@@ -18,13 +18,13 @@ mongoose.connect(process.env.MONGOOSE_URI, {
 const topicSchema = mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, reqired: true },
-  authorId: { type: String, required: true },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   date: { type: Date, required: true },
   category: { type: String, required: true },
   replies: [
     {
-      author: { type: String },
-      content: { type: String },
+      author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      content: { type: String, required: true },
       date: { type: Date },
     },
   ],
@@ -51,23 +51,28 @@ app.use(express.json());
 
 app.get('/topics', (req, res) => {
   Topic.find()
-    .limit(10)
+    .limit(20)
+    .populate('author', { password: 0, email: 0, __v: 0 })
     .exec((err, results) => {
-      if (err) return res.status(400).json({ status: 'failed' });
+      if (err) return console.log(err);
       res.status(200).json(results);
     });
 });
 
 app.get('/topics/:topic', (req, res) => {
-  Topic.findById(req.params.topic, (err, result) => {
-    if (err) return res.status(400).json({ status: 'failed' });
-    res.status(200).json(result);
-  });
+  Topic.findById(req.params.topic)
+    .populate('author', { password: 0, email: 0, __v: 0 })
+    .populate('replies.author', { password: 0, email: 0, __v: 0 })
+    .exec((err, result) => {
+      if (err) return res.status(400).json({ status: err });
+      console.log(result.author);
+      res.status(200).json(result);
+    });
 });
 
 app.post('/reply', (req, res) => {
   const { content, topic } = req.body;
-  const author = 'Seu Madruga'; // temporary
+  const author = '5fac1ac4f231cb2230cf8083'; // temporary
   const data = { author: author, content: content, date: new Date() };
   Topic.findById(topic, (err, result) => {
     if (err) return res.status(400).json({ status: 'Invalid topic ID.' });
@@ -85,7 +90,7 @@ app.post('/topic', (req, res) => {
   const topicData = {
     title: title,
     content: content,
-    authorId: author,
+    author: author,
     date: date,
     category: category,
   };
@@ -103,7 +108,6 @@ app.post('/register', (req, res) => {
     { $or: [{ username: user }, { email: email }] },
     (err, result) => {
       if (err) return console.log(err);
-      console.log(result);
       if (result) {
         if (result.email === email && result.username === user) {
           res

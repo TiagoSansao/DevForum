@@ -73,6 +73,11 @@
 
 .singleTopic aside .authorName {
   color: #ff2a6d;
+  font-size: 1.4rem;
+}
+
+.singleTopic aside .personInfo {
+  color: #d1f7ff;
 }
 
 .singleTopic aside img {
