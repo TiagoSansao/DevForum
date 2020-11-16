@@ -2,9 +2,10 @@
 
 import express from 'express';
 import cors from 'cors';
-import {} from 'dotenv/config.js';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import {} from 'dotenv/config.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -48,6 +49,19 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+function auth(req, res, next) {
+  console.log('salve');
+  const token = req.header('auth-token');
+  if (!token) return res.status(401).json({ status: 'Access denied' });
+  try {
+    const verified = jwt.verify(token, process.env.JWT_TOKEN);
+    req.user = verified;
+  } catch (err) {
+    res.status(400).json({ status: 'Invalid token' });
+  }
+  next();
+}
+
 // API CALLS
 
 app.get('/topics', (req, res) => {
@@ -71,7 +85,7 @@ app.get('/topics/:topic', (req, res) => {
     });
 });
 
-app.post('/reply', (req, res) => {
+app.post('/reply', auth, (req, res) => {
   const { content, topic } = req.body;
   const author = '5fac1ac4f231cb2230cf8083'; // temporary
   const data = { author: author, content: content, date: new Date() };
@@ -85,7 +99,7 @@ app.post('/reply', (req, res) => {
   });
 });
 
-app.post('/topic', (req, res) => {
+app.post('/topic', auth, (req, res) => {
   const { title, content, author, category } = req.body;
   const date = new Date();
   const topicData = {
@@ -150,8 +164,8 @@ app.post('/login', (req, res) => {
     if (!result) return res.status(250).json({ status: 'Username is wrong.' });
     bcrypt.compare(password, result.password).then((compareResult) => {
       if (compareResult) {
-        res.status(200).json({ status: 'Login credentials are correct!' });
-        console.log('Login credentials are correct!');
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN);
+        res.header('auth-token', token).send(token);
       } else return res.status(250).json({ status: 'Password is wrong.' });
     });
   });
