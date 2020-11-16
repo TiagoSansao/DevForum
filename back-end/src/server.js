@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import {} from 'dotenv/config.js';
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -119,21 +120,41 @@ app.post('/register', (req, res) => {
           res.status(250).json({ status: 'This email is already in use.' });
         }
       } else {
-        const userData = {
-          username: user,
-          password: password,
-          email: email,
-          registerDate: date,
-          birthday: new Date(birthday),
-        };
-        const newUser = new User(userData);
-        newUser.save((err) => {
-          if (err) return res.status(400).json({ status: 'failed' });
-          res.status(200).json({ status: 'success' });
-        });
+        (async function () {
+          const salt = await bcrypt.genSalt(10);
+          const hashedPassword = await bcrypt.hash(password, salt);
+
+          const userData = {
+            username: user,
+            password: hashedPassword,
+            email: email,
+            registerDate: date,
+            birthday: new Date(birthday),
+          };
+          console.log(userData);
+          const newUser = new User(userData);
+          newUser.save((err) => {
+            if (err) return res.status(400).json({ status: 'failed' });
+            res.status(200).json({ status: 'success' });
+          });
+        })();
       }
     }
   );
+});
+
+app.post('/login', (req, res) => {
+  const { user, password } = req.body;
+  User.findOne({ username: user }, (err, result) => {
+    if (err) return console.log(err);
+    if (!result) return res.status(250).json({ status: 'Username is wrong.' });
+    bcrypt.compare(password, result.password).then((compareResult) => {
+      if (compareResult) {
+        res.status(200).json({ status: 'Login credentials are correct!' });
+        console.log('Login credentials are correct!');
+      } else return res.status(250).json({ status: 'Password is wrong.' });
+    });
+  });
 });
 
 // TURNING THE SERVER ON

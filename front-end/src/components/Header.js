@@ -20,7 +20,7 @@ const Header = (props) => {
         </form>
         <section className='downRight'>
           <Link
-            to='login'
+            to='/login'
             style={
               props.where === 'login' ? { backgroundColor: '#27ae60' } : {}
             }
@@ -28,7 +28,7 @@ const Header = (props) => {
             Sign in
           </Link>
           <Link
-            to='register'
+            to='/register'
             style={
               props.where === 'register' ? { backgroundColor: ' #020258' } : {}
             }
