@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import api from '../services/api';
 import '../styles/pages/register.css';
@@ -15,18 +15,20 @@ const Register = () => {
 
   async function handleSubmission(event) {
     event.preventDefault();
-    await api
-      .post('/register', { user, password, email, birthday })
-      .then((response) => {
-        if (response.status === 250) {
-          setFormError(response.data.status);
-        } else if (response.status === 200) history.push('/');
-      });
+    const response = await api.post('/register', {
+      user,
+      password,
+      email,
+      birthday,
+    });
+    if (response.status === 250) {
+      setFormError(response.data.status);
+    } else if (response.status === 200) history.push('/');
   }
 
   return (
     <main className='fullscreen'>
-      <Header where='register' />"{' '}
+      <Header where='register' />{' '}
       <form method='post' className='register' onSubmit={handleSubmission}>
         <h2>Register</h2>
         <div className='inputDiv'>
@@ -69,6 +71,12 @@ const Register = () => {
         </div>
         <p style={{ color: 'red', textAlign: 'center' }}>{formError}</p>
         <input id='submit' type='submit' />
+        <p className='alreadyHaveAccount'>
+          Already have an account?{' '}
+          <Link className='link' to={'/login'}>
+            Sign in!
+          </Link>
+        </p>
       </form>
     </main>
   );

@@ -39,7 +39,7 @@
   justify-content: space-around;
 }
 
-.topicInfo cite {
+.topicInfo .authorName {
   color: #ff2a6d;
   text-decoration: underline;
 }

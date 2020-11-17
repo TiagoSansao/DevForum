@@ -28,7 +28,10 @@ const MainPage = () => {
                 <h3>{topic.title}</h3>
               </Link>
               <span className='topicInfo'>
-                <Link to={`user/${topic.author.username}`}>
+                <Link
+                  className='authorName'
+                  to={`user/${topic.author.username}`}
+                >
                   {topic.author.username}
                 </Link>
                 <time dateTime={topic.date}>{getTimeAgo(topic.date)}</time>

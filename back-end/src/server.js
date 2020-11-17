@@ -50,14 +50,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 function auth(req, res, next) {
-  console.log('salve');
   const token = req.header('auth-token');
-  if (!token) return res.status(401).json({ status: 'Access denied' });
+  if (!token) return res.redirect(401, '/login');
   try {
     const verified = jwt.verify(token, process.env.JWT_TOKEN);
     req.user = verified;
   } catch (err) {
-    res.status(400).json({ status: 'Invalid token' });
+    res.redirect(400, '/login');
   }
   next();
 }
@@ -100,18 +99,18 @@ app.post('/reply', auth, (req, res) => {
 });
 
 app.post('/topic', auth, (req, res) => {
-  const { title, content, author, category } = req.body;
+  const { title, content, category } = req.body;
   const date = new Date();
   const topicData = {
     title: title,
     content: content,
-    author: author,
+    author: req.user._id,
     date: date,
     category: category,
   };
   const newTopic = new Topic(topicData);
   newTopic.save((err) => {
-    if (err) return res.status(400).json({ status: 'failed' });
+    if (err) return console.log(err);
     res.status(200).json({ status: 'success' });
   });
 });
@@ -145,10 +144,12 @@ app.post('/register', (req, res) => {
             registerDate: date,
             birthday: new Date(birthday),
           };
-          console.log(userData);
           const newUser = new User(userData);
           newUser.save((err) => {
-            if (err) return res.status(400).json({ status: 'failed' });
+            if (err)
+              return res
+                .status(250)
+                .json({ status: 'You need to fill the whole form.' });
             res.status(200).json({ status: 'success' });
           });
         })();
@@ -164,7 +165,7 @@ app.post('/login', (req, res) => {
     if (!result) return res.status(250).json({ status: 'Username is wrong.' });
     bcrypt.compare(password, result.password).then((compareResult) => {
       if (compareResult) {
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN);
+        const token = jwt.sign({ _id: result._id }, process.env.JWT_TOKEN);
         res.header('auth-token', token).send(token);
       } else return res.status(250).json({ status: 'Password is wrong.' });
     });

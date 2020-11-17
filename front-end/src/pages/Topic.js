@@ -59,7 +59,7 @@ const Topic = () => {
         </header>
         <main>{topic.content}</main>
         <aside>
-          <Link to={`user/${topic.author.username}`} className='authorName'>
+          <Link to={`/user/${topic.author.username}`} className='authorName'>
             {topic.author.username}
           </Link>
           <img src={defaultUserImage} alt='' />
@@ -83,7 +83,10 @@ const Topic = () => {
             </header>
             <main>{reply.content}</main>
             <aside>
-              <Link to={`user/${topic.author.username}`} className='authorName'>
+              <Link
+                to={`/user/${topic.author.username}`}
+                className='authorName'
+              >
                 {topic.author.username}
               </Link>
               <img src={defaultUserImage} alt='' />
