@@ -31,7 +31,6 @@ const Topic = () => {
     await api.post('/reply', data);
     await apiCall();
     setReplyContent('');
-    console.log('chego aq');
   }
 
   if (!topic) {
@@ -84,10 +83,10 @@ const Topic = () => {
             <main>{reply.content}</main>
             <aside>
               <Link
-                to={`/user/${topic.author.username}`}
+                to={`/user/${reply.author.username}`}
                 className='authorName'
               >
-                {topic.author.username}
+                {reply.author.username}
               </Link>
               <img src={defaultUserImage} alt='' />
               <div className='personInfo'>

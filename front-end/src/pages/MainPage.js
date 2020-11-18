@@ -14,8 +14,6 @@ const MainPage = () => {
     });
   }, []);
 
-  console.log(topics);
-
   return (
     <main>
       <Header />

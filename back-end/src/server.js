@@ -51,17 +51,31 @@ app.use(express.json());
 
 function auth(req, res, next) {
   const token = req.header('auth-token');
-  if (!token) return res.redirect(401, '/login');
+  console.log(token);
+  if (!token) return res.redirect(301, '/login');
   try {
     const verified = jwt.verify(token, process.env.JWT_TOKEN);
     req.user = verified;
   } catch (err) {
-    res.redirect(400, '/login');
+    res.redirect(301, '/login');
   }
   next();
 }
 
 // API CALLS
+
+app.get('/isLogged', async (req, res) => {
+  const token = req.header('auth-token');
+  console.log(token);
+  if (!token) return res.status(200).send('not logged');
+  try {
+    const verified = jwt.verify(token, process.env.JWT_TOKEN);
+    const userData = await User.findById(verified._id, { password: 0 });
+    res.status(200).json(userData);
+  } catch (err) {
+    res.status(200).send('not logged');
+  }
+});
 
 app.get('/topics', (req, res) => {
   Topic.find()
@@ -86,8 +100,7 @@ app.get('/topics/:topic', (req, res) => {
 
 app.post('/reply', auth, (req, res) => {
   const { content, topic } = req.body;
-  const author = '5fac1ac4f231cb2230cf8083'; // temporary
-  const data = { author: author, content: content, date: new Date() };
+  const data = { author: req.user._id, content: content, date: new Date() };
   Topic.findById(topic, (err, result) => {
     if (err) return res.status(400).json({ status: 'Invalid topic ID.' });
     result.replies.push(data);
