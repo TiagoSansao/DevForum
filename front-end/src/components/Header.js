@@ -6,12 +6,20 @@ import api from '../services/api';
 const Header = (props) => {
   const [isLogged, setLogged] = useState(false);
 
+  function signOut() {
+    localStorage.setItem('auth-token', null);
+    setLogged(false);
+  }
+
   useEffect(() => {
-    api.get('/isLogged').then((response) => {
-      if (response.data === 'not logged') return setLogged(false);
-      setLogged(response.data);
-      console.log(response.data);
-    });
+    api
+      .get('/isLogged', {
+        headers: { 'auth-token': localStorage.getItem('auth-token') },
+      })
+      .then((response) => {
+        if (response.data === 'not logged') return setLogged(false);
+        setLogged(response.data);
+      });
   }, []);
 
   if (!isLogged) {
@@ -79,14 +87,7 @@ const Header = (props) => {
           >
             {isLogged.username}
           </Link>
-          <Link
-            to='/register'
-            style={
-              props.where === 'register' ? { backgroundColor: ' #020258' } : {}
-            }
-          >
-            Sign out
-          </Link>
+          <span onClick={signOut}>Logout</span>
         </section>
       </section>
     </header>

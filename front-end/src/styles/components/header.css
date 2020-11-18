@@ -27,7 +27,7 @@
   margin-right: 10px;
   justify-content: center;
 }
-.downRight a {
+.downRight > * {
   display: block;
   text-align: center;
   color: white;
@@ -35,8 +35,9 @@
   padding: 10px;
   transition: background-color 0.5s;
 }
-.downRight a:hover {
+.downRight > *:hover {
   background-color: #ff2a6d;
+  cursor: pointer;
 }
 .downLeft {
   display: flex;

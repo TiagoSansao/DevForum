@@ -15,8 +15,8 @@ const Login = () => {
     const response = await api.post('/login', { user, password });
     if (response.status === 250) return setFormError(response.data.status);
     if (response.status === 200) {
-      localStorage.setItem('auth-token', response.data);
-      history.push('/');
+      await localStorage.setItem('auth-token', response.data);
+      await history.push('/');
     }
   }
 
