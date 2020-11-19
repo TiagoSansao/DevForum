@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import Header from '../components/Header';
 import '../styles/pages/topic.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import defaultUserImage from '../assets/default-user-image.png';
 import { getTimeAgo } from '../utils/getTimeAgo';
 
 const Topic = () => {
+  const history = useHistory();
   const params = useParams();
   const [topic, setTopic] = useState(null);
   const [replyContent, setReplyContent] = useState('');
@@ -14,7 +15,6 @@ const Topic = () => {
   function apiCall() {
     api.get(`/topics/${params.topicId}`).then((response) => {
       setTopic(response.data);
-      console.log(response.data.replies);
     });
   }
 
@@ -28,11 +28,15 @@ const Topic = () => {
       topic: topic._id,
       content: replyContent,
     };
-    await api.post('/reply', data, {
-      headers: {
-        'auth-token': localStorage.getItem('auth-token'),
-      },
-    });
+    await api
+      .post('/reply', data, {
+        headers: {
+          'auth-token': localStorage.getItem('auth-token'),
+        },
+      })
+      .catch((err) => {
+        return history.push('/login');
+      });
     await apiCall();
     setReplyContent('');
   }
@@ -113,7 +117,7 @@ const Topic = () => {
           onChange={(e) => {
             setReplyContent(e.target.value);
           }}
-          placeholder="Type your reply to this post here, don't be shy :D"
+          placeholder="Type your reply to this post here, don't be shy :D (in order to reply you must be logged in)"
         />
         <input type='submit' />
       </form>

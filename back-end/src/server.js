@@ -46,24 +46,18 @@ const Topic = mongoose.model('Topic', topicSchema);
 // MIDDLEWARES
 
 app.use(cors());
-app.options('*', cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 function auth(req, res, next) {
   const token = req.header('auth-token');
   console.log(token);
-  if (!token)
-    return res
-      .header('Access-Control-Allow-Origin', '*')
-      .redirect(301, 'http:localhost:3000/login');
+  if (!token) return res.status(403).send();
   try {
     const verified = jwt.verify(token, process.env.JWT_TOKEN);
     req.user = verified;
   } catch (err) {
-    res
-      .header('Access-Control-Allow-Origin', '*')
-      .redirect(302, 'http://localhost:3000/login');
+    return res.status(403).send();
   }
   next();
 }
