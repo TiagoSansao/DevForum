@@ -46,18 +46,24 @@ const Topic = mongoose.model('Topic', topicSchema);
 // MIDDLEWARES
 
 app.use(cors());
+app.options('*', cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 function auth(req, res, next) {
   const token = req.header('auth-token');
   console.log(token);
-  if (!token) return res.redirect(301, '/login');
+  if (!token)
+    return res
+      .header('Access-Control-Allow-Origin', '*')
+      .redirect(301, 'http:localhost:3000/login');
   try {
     const verified = jwt.verify(token, process.env.JWT_TOKEN);
     req.user = verified;
   } catch (err) {
-    res.redirect(301, '/login');
+    res
+      .header('Access-Control-Allow-Origin', '*')
+      .redirect(302, 'http://localhost:3000/login');
   }
   next();
 }
@@ -66,8 +72,9 @@ function auth(req, res, next) {
 
 app.get('/isLogged', async (req, res) => {
   const token = req.header('auth-token');
-  console.log(token);
-  if (!token) return res.status(200).send('not logged');
+  if (!token) {
+    return res.status(200).send('not logged');
+  }
   try {
     const verified = jwt.verify(token, process.env.JWT_TOKEN);
     const userData = await User.findById(verified._id, { password: 0 });
@@ -102,7 +109,7 @@ app.post('/reply', auth, (req, res) => {
   const { content, topic } = req.body;
   const data = { author: req.user._id, content: content, date: new Date() };
   Topic.findById(topic, (err, result) => {
-    if (err) return res.status(400).json({ status: 'Invalid topic ID.' });
+    if (err) return console.log(err);
     result.replies.push(data);
     result.save((err) => {
       if (err) console.log(err);
@@ -158,12 +165,14 @@ app.post('/register', (req, res) => {
             birthday: new Date(birthday),
           };
           const newUser = new User(userData);
-          newUser.save((err) => {
+          newUser.save((err, result) => {
             if (err)
               return res
                 .status(250)
                 .json({ status: 'You need to fill the whole form.' });
-            res.status(200).json({ status: 'success' });
+            console.log(result);
+            const token = jwt.sign({ _id: result._id }, process.env.JWT_TOKEN);
+            res.header('auth-token', token).status(200).send(token);
           });
         })();
       }

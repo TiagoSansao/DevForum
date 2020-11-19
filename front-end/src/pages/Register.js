@@ -23,7 +23,10 @@ const Register = () => {
     });
     if (response.status === 250) {
       setFormError(response.data.status);
-    } else if (response.status === 200) history.push('/');
+    } else if (response.status === 200) {
+      await localStorage.setItem('auth-token', response.data);
+      await history.push('/');
+    }
   }
 
   return (

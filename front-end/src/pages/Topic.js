@@ -28,7 +28,11 @@ const Topic = () => {
       topic: topic._id,
       content: replyContent,
     };
-    await api.post('/reply', data);
+    await api.post('/reply', data, {
+      headers: {
+        'auth-token': localStorage.getItem('auth-token'),
+      },
+    });
     await apiCall();
     setReplyContent('');
   }
