@@ -1,0 +1,31 @@
+#userProfile {
+  max-width: 800px;
+  margin: 15px auto 15px auto;
+  background-color: #01012b;
+  border-radius: 5px;
+  border: 1px solid #ff2a6d;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 15px;
+  color: white;
+}
+
+#userProfile .profileImage {
+  border-radius: 10px;
+  width: 200px;
+  height: 200px;
+}
+
+#userProfile .dataContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+#userProfile .dataContainer .userContainer {
+  margin-left: 15px;
+  flex-grow: 1;
+}
+
+#userProfile .dataContainer .userContainer h2 {
+  color: #05d9e8;
+  font-size: 35px;
+}

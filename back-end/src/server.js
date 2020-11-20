@@ -78,6 +78,17 @@ app.get('/isLogged', async (req, res) => {
   }
 });
 
+app.get('/user/:user', async (req, res) => {
+  User.findOne(
+    { username: req.params.user },
+    { password: 0, email: 0 },
+    (err, result) => {
+      if (err || result === null) return res.status(404).send();
+      res.status(200).json(result);
+    }
+  );
+});
+
 app.get('/topics', (req, res) => {
   Topic.find()
     .limit(20)
