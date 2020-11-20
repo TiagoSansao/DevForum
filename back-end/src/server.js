@@ -89,6 +89,16 @@ app.get('/user/:user', async (req, res) => {
   );
 });
 
+app.get('/topics/from/:userId', (req, res) => {
+  Topic.find()
+    .limit(20)
+    .exec((err, result) => {
+      if (err) console.log(err);
+      console.log(result);
+      res.status(200).json(result);
+    });
+});
+
 app.get('/topics', (req, res) => {
   Topic.find()
     .limit(20)
