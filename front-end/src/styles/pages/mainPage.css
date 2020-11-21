@@ -1,3 +1,9 @@
+main.mainPage {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 .topics {
   margin: 15px auto 15px auto;
   background-color: #01012b;
@@ -46,6 +52,31 @@
 
 .topicInfo time {
   color: #005678;
+}
+
+.newTopic {
+  position: absolute;
+  top: 80%;
+  right: 20%;
+  background-color: #0d438f;
+  color: white;
+  height: 40px;
+  text-align: center;
+  width: 100px;
+  line-height: 40px;
+  font-size: 18px;
+  border-radius: 5px 0px 0px 5px;
+  box-shadow: 1px 1px 1px black;
+}
+.newTopic::after {
+  position: absolute;
+  content: '+';
+  background-color: green;
+  right: -39px;
+  width: 40px;
+  font-size: 35px;
+  top: 0px;
+  border-radius: 0px 5px 5px 0px;
 }
 
 @media (max-width: 750px) {

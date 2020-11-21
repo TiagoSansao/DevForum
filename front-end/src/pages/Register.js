@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import api from '../services/api';
 import '../styles/pages/register.css';
 
@@ -41,7 +42,7 @@ const Register = () => {
             onChange={(e) => setUser(e.target.value)}
             type='text'
             minLength={3}
-            maxLength={20}
+            maxLength={14}
           />
         </div>
         <div className='inputDiv'>
@@ -81,6 +82,7 @@ const Register = () => {
           </Link>
         </p>
       </form>
+      <Footer />
     </main>
   );
 };

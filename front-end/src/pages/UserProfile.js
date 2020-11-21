@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import api from '../services/api';
 import '../styles/pages/userProfile.css';
 import img from '../assets/default-user-image.png';
@@ -25,7 +26,7 @@ const UserProfile = () => {
   console.log(topics);
 
   return (
-    <main>
+    <main className='fullScreen'>
       <Header />
       <section id='userProfile'>
         <div className='dataContainer'>
@@ -65,6 +66,7 @@ const UserProfile = () => {
           })}
         </section>
       </section>
+      <Footer />
     </main>
   );
 };

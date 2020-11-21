@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import '../styles/pages/topic.css';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import defaultUserImage from '../assets/default-user-image.png';
@@ -54,7 +55,7 @@ const Topic = () => {
   }
 
   return (
-    <main>
+    <main className='topicFullscreen'>
       <Header />
       <article className='singleTopic'>
         <header>
@@ -121,6 +122,7 @@ const Topic = () => {
         />
         <input type='submit' />
       </form>
+      <Footer />
     </main>
   );
 };

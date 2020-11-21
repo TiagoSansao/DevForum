@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import api from '../services/api';
 import '../styles/pages/login.css';
 
@@ -32,7 +33,7 @@ const Login = () => {
             onChange={(e) => setUser(e.target.value)}
             type='text'
             minLength={3}
-            maxLength={20}
+            maxLength={14}
           />
         </div>
         <div className='inputDiv'>
@@ -58,6 +59,7 @@ const Login = () => {
           Did you forget your password?
         </p>
       </form>
+      <Footer />
     </main>
   );
 };

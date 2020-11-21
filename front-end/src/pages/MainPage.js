@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import '../styles/pages/mainPage.css';
 import { Link } from 'react-router-dom';
 import { getTimeAgo } from '../utils/getTimeAgo';
@@ -15,7 +16,7 @@ const MainPage = () => {
   }, []);
 
   return (
-    <main>
+    <main className='mainPage'>
       <Header />
       <section className='topics'>
         <h2>Recent topics</h2>
@@ -38,6 +39,10 @@ const MainPage = () => {
           );
         })}
       </section>
+      <Link to={'/create'} className='newTopic'>
+        <span>New Topic</span>
+      </Link>
+      <Footer />
     </main>
   );
 };
