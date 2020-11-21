@@ -3,7 +3,73 @@
   background-color: #01012b;
   border-radius: 5px;
   border: 1px solid #ff2a6d;
+  font-family: Arial, Helvetica, sans-serif;
   max-width: 800px;
   width: 100%;
-  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  padding: 15px;
+  flex-direction: column;
+}
+
+.topicFieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.topicFieldset .legend {
+  color: #ff2a6d;
+  width: 100%;
+  margin-bottom: 5px;
+  text-align: center;
+  font-size: 1.7rem;
+  border-bottom: 1px solid #d1f7ff;
+}
+
+.topicFieldset header {
+  display: flex;
+  flex-direction: column;
+}
+
+.topicFieldset div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.topicFieldset header #title {
+  outline: none;
+  width: 300px;
+  padding: 5px;
+  border-radius: 5px;
+  height: 30px;
+}
+.topicFieldset header #category {
+  height: 30px;
+  border-radius: 5px;
+  width: 300px;
+  outline: none;
+}
+.topicFieldset textarea {
+  outline: none;
+  resize: none;
+  height: 370px;
+  border-radius: 5px;
+  padding: 7.5px;
+}
+
+.topicFieldset input[type='submit'] {
+  height: 50px;
+  width: 300px;
+  margin: auto;
+  font-size: 1.5rem;
+  color: white;
+  background-color: #0016ee;
+  border: 1px solid black;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.topicFieldset input[type='submit']:hover {
+  background-color: #283dff;
 }

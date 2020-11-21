@@ -5,8 +5,10 @@
   text-decoration: none;
 }
 
-body {
+body,
+html {
   background-color: #151525;
+  overflow-x: hidden;
 }
 
 .fullscreen {

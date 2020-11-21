@@ -18,8 +18,8 @@ mongoose.connect(process.env.MONGOOSE_URI, {
 });
 
 const topicSchema = mongoose.Schema({
-  title: { type: String, required: true },
-  content: { type: String, reqired: true },
+  title: { type: String, required: true, max: 40, min: 5 },
+  content: { type: String, reqired: true, max: 2048, min: 5 },
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   date: { type: Date, required: true },
   category: { type: String, required: true },
@@ -143,9 +143,9 @@ app.post('/topic', auth, (req, res) => {
     category: category,
   };
   const newTopic = new Topic(topicData);
-  newTopic.save((err) => {
+  newTopic.save((err, result) => {
     if (err) return console.log(err);
-    res.status(200).json({ status: 'success' });
+    res.status(200).send(result._id);
   });
 });
 

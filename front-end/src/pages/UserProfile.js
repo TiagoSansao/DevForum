@@ -21,8 +21,6 @@ const UserProfile = () => {
     });
   }, [user]);
 
-  console.log(topics);
-
   return (
     <main className='fullscreen'>
       <Header />

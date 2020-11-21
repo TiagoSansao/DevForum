@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../styles/components/header.css';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 
 const Header = (props) => {
+  const history = useHistory();
   const [isLogged, setLogged] = useState(false);
 
   function signOut() {
     localStorage.setItem('auth-token', null);
     setLogged(false);
+    history.push('/login');
   }
 
   useEffect(() => {
