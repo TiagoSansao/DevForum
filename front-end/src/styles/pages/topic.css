@@ -26,6 +26,7 @@
   margin: 15px auto 15px auto;
   background-color: #01012b;
   max-width: 800px;
+  width: 100%;
   padding-bottom: 20px;
   font-family: Arial, Helvetica, sans-serif;
   display: grid;
