@@ -49,7 +49,7 @@
 }
 
 .newTopic {
-  max-width: 750px;
+  max-width: 800px;
   width: 100%;
   margin: 5px auto 15px auto;
   position: relative;
@@ -70,17 +70,6 @@
   color: white;
   border-radius: 5px;
   box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.7);
-}
-
-.newTopic::after {
-  position: absolute;
-  content: '+';
-  background-color: rgb(1, 97, 44);
-  right: 0px;
-  width: 40px;
-  font-size: 35px;
-  top: 0px;
-  border-radius: 0px 5px 5px 0px;
 }
 
 @media (max-width: 750px) {
