@@ -15,9 +15,7 @@ const UserProfile = () => {
   useEffect(() => {
     api.get(`/user/${user}`).then((response) => {
       setUserData(response.data);
-      console.log(response.data);
-      api.get(`topics/from/${response._id}`).then((res) => {
-        console.log(res.data);
+      api.get(`/topics/from/${response.data._id}`).then((res) => {
         setTopics(res.data);
       });
     });
@@ -26,7 +24,7 @@ const UserProfile = () => {
   console.log(topics);
 
   return (
-    <main className='fullScreen'>
+    <main className='fullscreen'>
       <Header />
       <section id='userProfile'>
         <div className='dataContainer'>
@@ -45,25 +43,35 @@ const UserProfile = () => {
           </div>
         </div>
         <section className='topicsProfile'>
-          <h2>Recent topics from {userData.username}</h2>
-          {topics.map((topic) => {
-            return (
-              <div key={topic._id} className='topicProfile'>
-                <Link className='topicTitle' to={`/topics/${topic._id}`}>
-                  <h3>{topic.title}</h3>
-                </Link>
-                <span className='topicProfileInfo'>
-                  <Link
-                    className='authorName'
-                    to={`/user/${userData.username}`}
-                  >
-                    {userData.username}
+          <h2>
+            Recent topics from {userData.username}
+            {topics.length === 0 && (
+              <p
+                style={{ color: '#ff2a6d', textAlign: 'center', fontSize: 15 }}
+              >
+                {userData.username} has not created any topic yet.
+              </p>
+            )}
+          </h2>
+          {topics.length !== 0 &&
+            topics.map((topic) => {
+              return (
+                <div key={topic._id} className='topicProfile'>
+                  <Link className='topicTitle' to={`/topics/${topic._id}`}>
+                    <h3>{topic.title}</h3>
                   </Link>
-                  <time dateTime={topic.date}>{getTimeAgo(topic.date)}</time>
-                </span>
-              </div>
-            );
-          })}
+                  <span className='topicProfileInfo'>
+                    <Link
+                      className='authorName'
+                      to={`/user/${userData.username}`}
+                    >
+                      {userData.username}
+                    </Link>
+                    <time dateTime={topic.date}>{getTimeAgo(topic.date)}</time>
+                  </span>
+                </div>
+              );
+            })}
         </section>
       </section>
       <Footer />

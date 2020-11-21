@@ -1,0 +1,9 @@
+.createTopic {
+  margin: 15px auto 15px auto;
+  background-color: #01012b;
+  border-radius: 5px;
+  border: 1px solid #ff2a6d;
+  max-width: 800px;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}

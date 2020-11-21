@@ -16,31 +16,33 @@ const MainPage = () => {
   }, []);
 
   return (
-    <main className='mainPage'>
+    <main className='fullscreen'>
       <Header />
-      <section className='topics'>
-        <h2>Recent topics</h2>
-        {topics.map((topic) => {
-          return (
-            <div key={topic._id} className='topic'>
-              <Link className='topicTitle' to={`/topics/${topic._id}`}>
-                <h3>{topic.title}</h3>
-              </Link>
-              <span className='topicInfo'>
-                <Link
-                  className='authorName'
-                  to={`user/${topic.author.username}`}
-                >
-                  {topic.author.username}
+      <section style={{ display: 'block' }}>
+        <section className='topics'>
+          <h2>Recent topics</h2>
+          {topics.map((topic) => {
+            return (
+              <div key={topic._id} className='topic'>
+                <Link className='topicTitle' to={`/topics/${topic._id}`}>
+                  <h3>{topic.title}</h3>
                 </Link>
-                <time dateTime={topic.date}>{getTimeAgo(topic.date)}</time>
-              </span>
-            </div>
-          );
-        })}
+                <span className='topicInfo'>
+                  <Link
+                    className='authorName'
+                    to={`user/${topic.author.username}`}
+                  >
+                    {topic.author.username}
+                  </Link>
+                  <time dateTime={topic.date}>{getTimeAgo(topic.date)}</time>
+                </span>
+              </div>
+            );
+          })}
+        </section>
       </section>
       <Link to={'/create'} className='newTopic'>
-        <span>New Topic</span>
+        <p>Create a topic</p>
       </Link>
       <Footer />
     </main>

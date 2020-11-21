@@ -1,9 +1,3 @@
-.topicFullscreen {
-  flex-direction: column;
-  display: flex;
-  height: 100vh;
-}
-
 .loading {
   color: #05d9e8;
   position: absolute;

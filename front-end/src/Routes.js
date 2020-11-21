@@ -6,6 +6,7 @@ import Topic from './pages/Topic';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import UserProfile from './pages/UserProfile';
+import CreateTopic from './pages/CreateTopic';
 
 const Routes = () => {
   return (
@@ -16,6 +17,7 @@ const Routes = () => {
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
         <Route path='/user/:user' component={UserProfile} />
+        <Route path='/create' component={CreateTopic} />
       </Switch>
     </BrowserRouter>
   );
