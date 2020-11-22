@@ -55,7 +55,7 @@ const Topic = () => {
   }
 
   return (
-    <main className='topicFullscreen'>
+    <main className='fullscreen'>
       <Header />
       <article className='singleTopic'>
         <header>
