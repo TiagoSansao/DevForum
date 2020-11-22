@@ -23,6 +23,7 @@ const Header = (props) => {
       .then((response) => {
         if (response.data === 'not logged') return setLogged(false);
         setLogged(response.data);
+        if (props.getData) props.getData(response.data);
       });
   }, []);
 

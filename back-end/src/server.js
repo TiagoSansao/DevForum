@@ -38,6 +38,7 @@ const userSchema = mongoose.Schema({
   email: { type: String, required: true, min: 5, max: 256 },
   registerDate: { type: Date, required: true },
   birthday: { type: Date, required: true },
+  description: { type: String, max: 256 },
 });
 
 const User = mongoose.model('User', userSchema);
@@ -201,7 +202,9 @@ app.post('/login', (req, res) => {
     if (!result) return res.status(250).json({ status: 'Username is wrong.' });
     bcrypt.compare(password, result.password).then((compareResult) => {
       if (compareResult) {
-        const token = jwt.sign({ _id: result._id }, process.env.JWT_TOKEN);
+        const token = jwt.sign({ _id: result._id }, process.env.JWT_TOKEN, {
+          expiresIn: '12h',
+        });
         res.header('auth-token', token).send(token);
       } else return res.status(250).json({ status: 'Password is wrong.' });
     });
