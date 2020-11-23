@@ -150,6 +150,11 @@ app.post('/topic', auth, (req, res) => {
 
 app.post('/register', (req, res) => {
   const { user, password, email, birthday } = req.body;
+  if (user.length > 14 || email.length > 256)
+    return res.status(250).json({
+      status:
+        'Exceeding the max length? Are you challenging my capacity to make a simple validation Sr.Hacker-man?',
+    });
   const date = new Date();
   User.findOne(
     { $or: [{ username: user }, { email: email }] },
@@ -211,9 +216,15 @@ app.post('/login', (req, res) => {
 
 app.put('/setDescription', async (req, res) => {
   const { _id, desc } = req.body;
+  if (desc.length > 256)
+    res
+      .status(250)
+      .send(
+        'The maximum length is 256, are you challenging my capacity to make a simple validation Sr.Hacker-man?'
+      );
   const response = await User.findByIdAndUpdate(_id, { description: desc });
   if (response) return res.status(200).send();
-  res.status(250).send();
+  res.status(250).send('Something went wrong.');
 });
 
 app.put('/setPassword', (req, res) => {});

@@ -25,8 +25,7 @@ const Settings = () => {
     api.put('/setDescription', data, header).then((response) => {
       if (response.status === 200)
         return setDescResponse('Description successfully updated!');
-      if (response.status === 250)
-        return setDescResponse('Something went wrong.');
+      if (response.status === 250) return setDescResponse(response.data);
     });
   }
 
@@ -76,6 +75,7 @@ const Settings = () => {
             <textarea
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
+              maxLength={256}
               placeholder='Write your description here, remember to be nice and follow the rules :D'
             ></textarea>
             {descResponse}
@@ -89,6 +89,7 @@ const Settings = () => {
               type='password'
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
+              maxLength={256}
               placeholder='Current password'
             />{' '}
             <br />
@@ -96,6 +97,7 @@ const Settings = () => {
               type='password'
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
+              maxLength={256}
               placeholder='New password'
             />{' '}
             <br />
@@ -103,6 +105,7 @@ const Settings = () => {
               type='password'
               value={newPassword2}
               onChange={(e) => setNewPassword2(e.target.value)}
+              maxLength={256}
               placeholder='Repeat new password'
             />
             <input type='submit' value='Save new password' />
