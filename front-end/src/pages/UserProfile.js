@@ -38,6 +38,12 @@ const UserProfile = () => {
               Register date:{' '}
               {new Date(userData.registerDate).toLocaleDateString()}
             </time>
+            <p>
+              Description:{' '}
+              {userData.description
+                ? userData.description
+                : 'This user does not have a description.'}
+            </p>{' '}
           </div>
         </div>
         <section className='topicsProfile'>

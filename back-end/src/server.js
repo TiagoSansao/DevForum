@@ -52,7 +52,6 @@ app.use(express.json());
 
 function auth(req, res, next) {
   const token = req.header('auth-token');
-  console.log(token);
   if (!token) return res.status(403).send();
   try {
     const verified = jwt.verify(token, process.env.JWT_TOKEN);
@@ -115,7 +114,6 @@ app.get('/topics/:topic', (req, res) => {
     .populate('replies.author', { password: 0, email: 0, __v: 0 })
     .exec((err, result) => {
       if (err) return res.status(400).json({ status: err });
-      console.log(result.author);
       res.status(200).json(result);
     });
 });
@@ -210,6 +208,17 @@ app.post('/login', (req, res) => {
     });
   });
 });
+
+app.put('/setDescription', async (req, res) => {
+  const { _id, desc } = req.body;
+  const response = await User.findByIdAndUpdate(_id, { description: desc });
+  if (response) return res.status(200).send();
+  res.status(250).send();
+});
+
+app.put('/setPassword', (req, res) => {});
+
+app.put('/setPhoto', (req, res) => {});
 
 // TURNING THE SERVER ON
 
