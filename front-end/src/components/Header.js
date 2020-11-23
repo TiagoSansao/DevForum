@@ -21,7 +21,10 @@ const Header = (props) => {
         headers: { 'auth-token': localStorage.getItem('auth-token') },
       })
       .then((response) => {
-        if (response.data === 'not logged') return setLogged(false);
+        if (response.data === 'not logged') {
+          if (props.getData) return history.push('/login');
+          return setLogged(false);
+        }
         setLogged(response.data);
         if (props.getData) props.getData(response.data);
       });
