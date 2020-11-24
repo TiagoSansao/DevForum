@@ -190,7 +190,6 @@ app.post('/register', (req, res) => {
               return res
                 .status(250)
                 .json({ status: 'You need to fill the whole form.' });
-            console.log(result);
             const token = jwt.sign({ _id: result._id }, process.env.JWT_TOKEN);
             res.header('auth-token', token).status(200).send(token);
           });
@@ -229,7 +228,28 @@ app.put('/setDescription', async (req, res) => {
   res.status(250).send('Something went wrong.');
 });
 
-app.put('/setPassword', (req, res) => {});
+app.put('/setPassword', async (req, res) => {
+  const { _id, newPassword, currentPassword } = req.body;
+  if (newPassword.length === 0 || currentPassword.length === 0)
+    return res.status(250).send('Fill the whole form before submiting');
+  if (newPassword.length < 6)
+    return res
+      .status(250)
+      .send('Your new password needs to have at least 6 characters.');
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+  const response = await User.findById(_id, { password: 1 });
+  bcrypt.compare(currentPassword, response.password).then((compareResult) => {
+    if (!compareResult) {
+      return res.status(250).send('Your current password is invalid');
+    }
+    response.password = hashedPassword;
+    response.save((err) => {
+      if (err) console.log(err);
+      return res.status(200).send('Changed password successfully');
+    });
+  });
+});
 
 app.put('/setPhoto', (req, res) => {});
 

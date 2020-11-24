@@ -31,6 +31,12 @@ const Settings = () => {
 
   function changePassword(e) {
     e.preventDefault();
+    if (newPassword !== newPassword2)
+      return setPasswordResponse('Passwords do not match');
+    const data = { _id: userData._id, newPassword, currentPassword };
+    api.put('setPassword', data, header).then((response) => {
+      setPasswordResponse(response.data);
+    });
   }
 
   function changePhoto(e) {
@@ -108,6 +114,7 @@ const Settings = () => {
               maxLength={256}
               placeholder='Repeat new password'
             />
+            {passwordResponse} <br />
             <input type='submit' value='Save new password' />
           </form>
         </main>
