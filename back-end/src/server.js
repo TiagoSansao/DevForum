@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGOOSE_URI, {
 });
 
 const topicSchema = mongoose.Schema({
-  title: { type: String, required: true, max: 40, min: 5 },
+  title: { type: String, required: true, max: 50, min: 5 },
   content: { type: String, reqired: true, max: 2048, min: 5 },
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   date: { type: Date, required: true },
@@ -100,7 +100,7 @@ app.get('/topics/from/:userId', (req, res) => {
 
 app.get('/topics', (req, res) => {
   Topic.find()
-    .limit(20)
+    .limit()
     .populate('author', { password: 0, email: 0, __v: 0 })
     .exec((err, results) => {
       if (err) return console.log(err);
@@ -120,6 +120,7 @@ app.get('/topics/:topic', (req, res) => {
 
 app.post('/reply', auth, (req, res) => {
   const { content, topic } = req.body;
+  if (content.length > 2048) return res.status(404);
   const data = { author: req.user._id, content: content, date: new Date() };
   Topic.findById(topic, (err, result) => {
     if (err) return console.log(err);
@@ -133,6 +134,7 @@ app.post('/reply', auth, (req, res) => {
 
 app.post('/topic', auth, (req, res) => {
   const { title, content, category } = req.body;
+  if (title.length > 50 || content.length > 2048) return res.status(404);
   const date = new Date();
   const topicData = {
     title: title,

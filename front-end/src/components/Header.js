@@ -7,7 +7,6 @@ import api from '../services/api';
 const Header = (props) => {
   const history = useHistory();
   const [isLogged, setLogged] = useState(false);
-  const [dropdownSelected, setDropdownSelected] = useState(false);
 
   function signOut() {
     localStorage.setItem('auth-token', null);
@@ -87,13 +86,10 @@ const Header = (props) => {
           <input type='submit' value='Search' />
         </form>
         <section className='downRight'>
-          <div
-            className={`dropdown ${dropdownSelected ? 'focused' : ''}`}
-            onClick={() => setDropdownSelected(!dropdownSelected)}
-          >
-            User: {isLogged.username}
-            <i className='caretDown'></i>
-            <div className={`content ${dropdownSelected ? 'show' : ''}`}>
+          <div className={`dropdown`}>
+            User: {isLogged.username} &nbsp;
+            <i class='fa fa-caret-down' aria-hidden='true'></i>
+            <div className={`content`}>
               <Link className='item' to={`/user/${isLogged.username}`}>
                 Profile
               </Link>

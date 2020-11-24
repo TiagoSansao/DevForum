@@ -82,7 +82,7 @@
   display: none;
 }
 
-.dropdown .content.show {
+.dropdown:hover .content {
   display: block;
   position: absolute;
   top: 40px;

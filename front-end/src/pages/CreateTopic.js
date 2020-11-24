@@ -49,7 +49,7 @@ const CreateTopic = () => {
               <input
                 id='title'
                 type='text'
-                maxLength='40'
+                maxLength='50'
                 minLength='5'
                 value={title}
                 onChange={(e) => setTitle(e.currentTarget.value)}
