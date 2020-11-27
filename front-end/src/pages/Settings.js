@@ -15,6 +15,7 @@ const Settings = () => {
   const [descResponse, setDescResponse] = useState('');
   const [photoResponse, setPhotoResponse] = useState('');
   const [uploadedFile, setUploadedFile] = useState();
+  const [previewFile, setPreviewFile] = useState();
 
   console.log(uploadedFile);
 
@@ -43,7 +44,8 @@ const Settings = () => {
   }
 
   function selectImage(e) {
-    setUploadedFile(URL.createObjectURL(e.target.files[0]));
+    setUploadedFile(e.target.files[0]);
+    setPreviewFile(URL.createObjectURL(e.target.files[0]));
   }
 
   function changePhoto(e) {
@@ -133,7 +135,7 @@ const Settings = () => {
         <aside className='right'>
           <h4>User photo</h4>
           <img
-            src={uploadedFile ? uploadedFile : default_user_image}
+            src={previewFile ? previewFile : default_user_image}
             alt='User'
           />
           {<span style={{ marginTop: 5 }}>{photoResponse}</span>}
