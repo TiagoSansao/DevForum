@@ -13,6 +13,7 @@ const getUser = async (req, res) => {
 
 const setDescription = async (req, res) => {
   const { _id, desc } = req.body;
+  console.log(_id);
   if (desc.length > 256)
     res
       .status(250)
@@ -24,9 +25,14 @@ const setDescription = async (req, res) => {
   res.status(250).send('Something went wrong.');
 };
 
-const setPhoto = (req, res) => {
-  console.log(req.data);
-  res.status(200).send();
+const setPhoto = async (req, res) => {
+  console.log(req.file);
+  const { _id } = req.body;
+  console.log(_id);
+  const user = await User.findById(_id);
+  user.imgKey = req.file.filename;
+  const response = await user.save();
+  res.status(200).send(response);
 };
 
 export { getUser, setDescription, setPhoto };

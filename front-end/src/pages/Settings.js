@@ -42,9 +42,17 @@ const Settings = () => {
     });
   }
 
+  function selectImage(e) {
+    setUploadedFile(URL.createObjectURL(e.target.files[0]));
+  }
+
   function changePhoto(e) {
     e.preventDefault();
-    api.put('setPhoto', { file: uploadedFile }, header);
+    if (!uploadedFile) return setPhotoResponse('You need to add a photo!');
+    const data = new FormData();
+    data.append('file', uploadedFile);
+    data.append('_id', userData._id);
+    api.put('setPhoto', data, header);
   }
 
   function getData(data) {
@@ -124,16 +132,17 @@ const Settings = () => {
         </main>
         <aside className='right'>
           <h4>User photo</h4>
-          <img src={default_user_image} alt='User' />
+          <img
+            src={uploadedFile ? uploadedFile : default_user_image}
+            alt='User'
+          />
+          {<span style={{ marginTop: 5 }}>{photoResponse}</span>}
           <form
             type='post'
             encType='multipart/form-data'
             onSubmit={changePhoto}
           >
-            <input
-              type='file'
-              onChange={(e) => setUploadedFile(e.target.value)}
-            />
+            <input type='file' onChange={selectImage} />
             <input type='submit' value='Save photo' />
           </form>
         </aside>
