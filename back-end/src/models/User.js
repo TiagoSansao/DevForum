@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
   registerDate: { type: Date, required: true },
   birthday: { type: Date, required: true },
   description: { type: String, max: 256 },
+  imgKey: { type: String },
 });
 
 export default mongoose.model('User', userSchema);

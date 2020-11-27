@@ -25,7 +25,7 @@ const setDescription = async (req, res) => {
 };
 
 const setPhoto = (req, res) => {
-  console.log(req.file);
+  console.log(req.data);
   res.status(200).send();
 };
 
