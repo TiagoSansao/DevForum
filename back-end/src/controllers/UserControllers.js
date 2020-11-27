@@ -24,6 +24,9 @@ const setDescription = async (req, res) => {
   res.status(250).send('Something went wrong.');
 };
 
-const setPhoto = (req, res) => {};
+const setPhoto = (req, res) => {
+  console.log(req.file);
+  res.status(200).send();
+};
 
 export { getUser, setDescription, setPhoto };

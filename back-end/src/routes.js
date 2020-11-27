@@ -1,4 +1,6 @@
 import Router from 'express';
+import multer from 'multer';
+import multerConfig from './config/multer.js';
 import auth from './controllers/AuthController.js';
 import {
   isLogged,
@@ -28,7 +30,7 @@ routes.put('/setPassword', auth, updatePassword);
 
 routes.get('/user/:user', getUser);
 routes.put('/setDescription', auth, setDescription);
-routes.put('/setPhoto', auth, setPhoto);
+routes.put('/setPhoto', auth, multer(multerConfig).single('file'), setPhoto);
 
 routes.get('/topics/from/:userId', getTopicsFromUser);
 routes.get('/topics', getRecentTopics);

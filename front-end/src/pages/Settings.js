@@ -14,6 +14,9 @@ const Settings = () => {
   const [passwordResponse, setPasswordResponse] = useState('');
   const [descResponse, setDescResponse] = useState('');
   const [photoResponse, setPhotoResponse] = useState('');
+  const [uploadedFile, setUploadedFile] = useState();
+
+  console.log(uploadedFile);
 
   const header = {
     headers: { 'auth-token': localStorage.getItem('auth-token') },
@@ -41,6 +44,7 @@ const Settings = () => {
 
   function changePhoto(e) {
     e.preventDefault();
+    api.put('setPhoto', { file: uploadedFile }, header);
   }
 
   function getData(data) {
@@ -126,7 +130,10 @@ const Settings = () => {
             encType='multipart/form-data'
             onSubmit={changePhoto}
           >
-            <input type='file' />
+            <input
+              type='file'
+              onChange={(e) => setUploadedFile(e.target.value)}
+            />
             <input type='submit' value='Save photo' />
           </form>
         </aside>
