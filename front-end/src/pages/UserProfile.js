@@ -26,7 +26,15 @@ const UserProfile = () => {
       <Header />
       <section id='userProfile'>
         <div className='dataContainer'>
-          <img className='profileImage' src={img} alt=''></img>
+          <img
+            className='profileImage'
+            src={
+              userData.imgKey
+                ? `http://localhost:3500/uploads/${userData.imgKey}`
+                : img
+            }
+            alt=''
+          ></img>
           <div className='userContainer'>
             <h2>{userData.username}</h2>
             <hr /> <br />

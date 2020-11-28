@@ -44,20 +44,48 @@ const Settings = () => {
   }
 
   function selectImage(e) {
-    setUploadedFile(e.target.files[0]);
-    setPreviewFile(URL.createObjectURL(e.target.files[0]));
+    const photo = e.target.files[0];
+    if (
+      photo.type === 'image/jpeg' ||
+      photo.type === 'image/png' ||
+      photo.type === 'image/jpeg'
+    ) {
+      setUploadedFile(photo);
+      setPreviewFile(URL.createObjectURL(photo));
+      return;
+    }
+    setPreviewFile('');
+    setPhotoResponse('Only JPG, JPEG and PNG files are accepted.');
   }
 
-  function changePhoto(e) {
+  async function changePhoto(e) {
     e.preventDefault();
     if (!uploadedFile) return setPhotoResponse('You need to add a photo!');
     const data = new FormData();
     data.append('file', uploadedFile);
     data.append('_id', userData._id);
-    api.put('setPhoto', data, header);
+    try {
+      const response = await api.put('setPhoto', data, header);
+      return setPhotoResponse(response.data);
+    } catch (err) {
+      return setPhotoResponse('Only JPG, JPEG and PNG files are accepted.');
+    }
+  }
+
+  async function deleteCurrentPhoto(e) {
+    e.preventDefault();
+    const response = await api.put(
+      'deletePhoto',
+      { _id: userData._id },
+      header
+    );
+    setPreviewFile('');
+    setUploadedFile('');
+    setPhotoResponse(response.data);
   }
 
   function getData(data) {
+    console.log(data);
     setUserData(data);
   }
 
@@ -135,7 +163,13 @@ const Settings = () => {
         <aside className='right'>
           <h4>User photo</h4>
           <img
-            src={previewFile ? previewFile : default_user_image}
+            src={
+              previewFile
+                ? previewFile
+                : userData.imgKey
+                ? `http://localhost:3500/uploads/${userData.imgKey}`
+                : default_user_image
+            }
             alt='User'
           />
           {<span style={{ marginTop: 5 }}>{photoResponse}</span>}
@@ -147,6 +181,12 @@ const Settings = () => {
             <input type='file' onChange={selectImage} />
             <input type='submit' value='Save photo' />
           </form>
+          <input
+            type='submit'
+            style={{ backgroundColor: '#a20a0a' }}
+            onClick={deleteCurrentPhoto}
+            value='Delete current photo'
+          />
         </aside>
       </section>
       <Footer />

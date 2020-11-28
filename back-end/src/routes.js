@@ -9,6 +9,7 @@ import {
   updatePassword,
 } from './controllers/AuthenticationControllers.js';
 import {
+  deletePhoto,
   getUser,
   setDescription,
   setPhoto,
@@ -31,6 +32,7 @@ routes.put('/setPassword', auth, updatePassword);
 routes.get('/user/:user', getUser);
 routes.put('/setDescription', auth, setDescription);
 routes.put('/setPhoto', auth, multer(multerConfig).single('file'), setPhoto);
+routes.put('/deletePhoto', auth, deletePhoto);
 
 routes.get('/topics/from/:userId', getTopicsFromUser);
 routes.get('/topics', getRecentTopics);

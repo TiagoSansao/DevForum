@@ -13,7 +13,6 @@ const getUser = async (req, res) => {
 
 const setDescription = async (req, res) => {
   const { _id, desc } = req.body;
-  console.log(_id);
   if (desc.length > 256)
     res
       .status(250)
@@ -26,13 +25,22 @@ const setDescription = async (req, res) => {
 };
 
 const setPhoto = async (req, res) => {
-  console.log(req.file);
   const { _id } = req.body;
-  console.log(_id);
   const user = await User.findById(_id);
   user.imgKey = req.file.filename;
   const response = await user.save();
-  res.status(200).send(response);
+  if (response) return res.status(200).send('Image updated successfully');
+  res.status(250).send('Something went wrong.');
 };
 
-export { getUser, setDescription, setPhoto };
+const deletePhoto = async (req, res) => {
+  const response = await User.findByIdAndUpdate(
+    req.body._id,
+    { imgKey: '' },
+    { useFindAndModify: true }
+  );
+  if (response) return res.status(200).send('Image removed successfully.');
+  res.status(250).send('Something went wrong.');
+};
+
+export { getUser, setDescription, setPhoto, deletePhoto };

@@ -3,6 +3,7 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import path from 'path';
 import routes from './routes.js';
 import {} from 'dotenv/config.js';
 
@@ -21,6 +22,7 @@ mongoose.connect(process.env.MONGOOSE_URI, {
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(express.static(path.join(path.dirname(''), 'public')));
 app.use(routes);
 
 // TURNING THE SERVER ON
