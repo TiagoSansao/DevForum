@@ -7,11 +7,17 @@ import api from '../services/api';
 const Header = (props) => {
   const history = useHistory();
   const [isLogged, setLogged] = useState(false);
+  const [search, setSearch] = useState('');
 
   function signOut() {
     localStorage.setItem('auth-token', null);
     setLogged(false);
     history.push('/login');
+  }
+
+  function handleSearch() {
+    if (!search) return window.alert('Type something before submitting.');
+    history.push(`/search/?title=${search}`);
   }
 
   useEffect(() => {
@@ -41,7 +47,7 @@ const Header = (props) => {
           </div>
         </main>
         <section className='down'>
-          <form method='POST' className='downLeft'>
+          <form method='GET' className='downLeft'>
             <input placeholder='Type something' type='text' />
             <input type='submit' value='Search' />
           </form>
@@ -81,14 +87,18 @@ const Header = (props) => {
         </div>
       </main>
       <section className='down'>
-        <form method='POST' className='downLeft'>
-          <input placeholder='Type something' type='text' />
+        <form method='POST' className='downLeft' onSubmit={handleSearch}>
+          <input
+            placeholder='Type something'
+            type='text'
+            onChange={(e) => setSearch(e.target.value)}
+          />
           <input type='submit' value='Search' />
         </form>
         <section className='downRight'>
           <div className={`dropdown`}>
             User: {isLogged.username} &nbsp;
-            <i class='fa fa-caret-down' aria-hidden='true'></i>
+            <i className='fa fa-caret-down' aria-hidden='true'></i>
             <div className={`content`}>
               <Link className='item' to={`/user/${isLogged.username}`}>
                 Profile

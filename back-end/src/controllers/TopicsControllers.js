@@ -29,6 +29,18 @@ const getSpecificTopic = (req, res) => {
     });
 };
 
+const getTopicsWithFilters = (req, res) => {
+  const { title, category } = req.body;
+  if (!title && !category) return res.status(250).send('No topics were found.');
+  Topic.find({ title: title })
+    .limit(20)
+    .populate('author', { password: 0, email: 0, __v: 0 })
+    .exec((err, result) => {
+      if (err) console.log(err);
+      res.status(200).send(result);
+    });
+};
+
 const reply = (req, res) => {
   const { content, topic } = req.body;
   if (content.length > 2048) return res.status(404);
@@ -67,4 +79,5 @@ export {
   getSpecificTopic,
   reply,
   createTopic,
+  getTopicsWithFilters,
 };

@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import UserProfile from './pages/UserProfile';
 import CreateTopic from './pages/CreateTopic';
 import Settings from './pages/Settings';
+import Search from './pages/Search';
 
 const Routes = () => {
   return (
@@ -20,6 +21,7 @@ const Routes = () => {
         <Route path='/user/:user' component={UserProfile} />
         <Route path='/create' component={CreateTopic} />
         <Route path='/settings' component={Settings} />
+        <Route path='/search' component={Search} />
       </Switch>
     </BrowserRouter>
   );

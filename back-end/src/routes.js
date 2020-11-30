@@ -19,6 +19,7 @@ import {
   getRecentTopics,
   getSpecificTopic,
   getTopicsFromUser,
+  getTopicsWithFilters,
   reply,
 } from './controllers/TopicsControllers.js';
 
@@ -35,8 +36,9 @@ routes.put('/setPhoto', auth, multer(multerConfig).single('file'), setPhoto);
 routes.put('/deletePhoto', auth, deletePhoto);
 
 routes.get('/topics/from/:userId', getTopicsFromUser);
-routes.get('/topics', getRecentTopics);
 routes.get('/topics/:topic', getSpecificTopic);
+routes.get('/topics', getRecentTopics);
+routes.post('/search', getTopicsWithFilters);
 routes.post('/reply', auth, reply);
 routes.post('/topic', auth, createTopic);
 
