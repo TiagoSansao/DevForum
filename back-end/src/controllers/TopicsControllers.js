@@ -30,7 +30,9 @@ const getSpecificTopic = (req, res) => {
 };
 
 const getTopicsWithFilters = (req, res) => {
-  const { title, category } = req.body;
+  let { title, category } = req.body;
+  if (category === 'C  /C/C') category = 'C++/C/C#';
+  console.log(category);
   if (!title && !category) return res.status(250).send('No topics were found.');
   Topic.find(
     !title || !category
