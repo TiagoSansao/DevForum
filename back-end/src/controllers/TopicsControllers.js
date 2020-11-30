@@ -32,11 +32,18 @@ const getSpecificTopic = (req, res) => {
 const getTopicsWithFilters = (req, res) => {
   const { title, category } = req.body;
   if (!title && !category) return res.status(250).send('No topics were found.');
-  Topic.find({ title: title })
+  Topic.find(
+    !title || !category
+      ? !title
+        ? { category: category }
+        : { title: title }
+      : { title: title, category: category }
+  )
     .limit(20)
     .populate('author', { password: 0, email: 0, __v: 0 })
     .exec((err, result) => {
       if (err) console.log(err);
+      console.log(result);
       res.status(200).send(result);
     });
 };
