@@ -57,6 +57,7 @@ const MainPage = () => {
                   >
                     {topic.author.username}
                   </Link>
+                  {topic.category}
                   <time dateTime={topic.date}>{getTimeAgo(topic.date)}</time>
                 </span>
               </div>

@@ -26,6 +26,14 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.topics #category {
+  cursor: pointer;
+  padding: 3px;
+  background-color: #0016ee;
+  color: white;
+  border: 1px solid black;
+}
+
 .filter {
   text-align: center;
   margin: 0px 10px 10px 15px;
@@ -65,8 +73,9 @@
 }
 
 .topicInfo {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
 }
 
 .topicInfo .authorName {
