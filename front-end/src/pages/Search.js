@@ -22,9 +22,6 @@ const Search = () => {
     });
   }, [title, category]);
 
-  console.log(history.location);
-  console.log(topics);
-
   function handleCategory(e) {
     if (title)
       return history.push(`?title=${title}&category=${e.currentTarget.value}`);
@@ -36,7 +33,21 @@ const Search = () => {
       <Header />
       <section className='topics'>
         <section className='topDiv'>
-          <h2>Search results</h2>
+          <h2>
+            Search results
+            {topics.length === 0 && (
+              <h3
+                style={{
+                  color: 'white',
+                  fontSize: 18,
+                  textAlign: 'center',
+                }}
+              >
+                No topics were found.
+              </h3>
+            )}
+          </h2>
+
           <form className='filter'>
             <label for='category'>Filter by category</label> <br />
             <select id='category' onChange={handleCategory}>
@@ -70,6 +81,9 @@ const Search = () => {
           );
         })}
       </section>
+      <Link to={'/create'} className='newTopic'>
+        <p>Create a topic</p>
+      </Link>
       <Footer />
     </main>
   );
