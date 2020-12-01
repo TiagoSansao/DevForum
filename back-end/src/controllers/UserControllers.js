@@ -17,7 +17,7 @@ const setDescription = async (req, res) => {
     res
       .status(250)
       .send(
-        'The maximum length is 256, are you challenging my capacity to make a simple validation Sr.Hacker-man?'
+        'The maximum length is 256, are you challenging my capacity to make a simple validation Mr.Hacker-man?'
       );
   const response = await User.findByIdAndUpdate(_id, { description: desc });
   if (response) return res.status(200).send();

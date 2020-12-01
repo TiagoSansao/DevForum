@@ -15,7 +15,8 @@ const Header = (props) => {
     history.push('/login');
   }
 
-  function handleSearch() {
+  function handleSearch(e) {
+    e.preventDefault();
     if (!search) return window.alert('Type something before submitting.');
     history.push(`/search/?title=${search}`);
   }
@@ -47,8 +48,12 @@ const Header = (props) => {
           </div>
         </main>
         <section className='down'>
-          <form method='GET' className='downLeft'>
-            <input placeholder='Type something' type='text' />
+          <form method='POST' className='downLeft' onSubmit={handleSearch}>
+            <input
+              placeholder='Type something'
+              type='text'
+              onChange={(e) => setSearch(e.target.value)}
+            />
             <input type='submit' value='Search' />
           </form>
           <section className='downRight'>
