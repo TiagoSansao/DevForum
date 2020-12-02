@@ -67,12 +67,13 @@ const MainPage = () => {
           })}
         </section>
       </section>
-      <Link to={`/search/?page=1`}>
-        <a>1</a>
-      </Link>
-      <Link to={`/search/?page=2`}>
-        <a>2</a>
-      </Link>
+      <section className='pagination'>
+        <Link to='/search/?page=2'>
+          <a>
+            next page <i className='fa fa-arrow-right' aria-hidden='true'></i>
+          </a>
+        </Link>
+      </section>
       <Footer />
     </main>
   );

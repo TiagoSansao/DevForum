@@ -30,9 +30,10 @@ const Search = () => {
   }
 
   function handlePagination(clickedPage) {
+    if (isNaN(clickedPage)) clickedPage = 2;
     if (clickedPage < 1)
       return window.alert('You are already on the first page!');
-    urlParams.set('page', clickedPage);
+    urlParams.set('page', parseInt(clickedPage));
     return history.push(`/search/?${urlParams}`);
   }
 
