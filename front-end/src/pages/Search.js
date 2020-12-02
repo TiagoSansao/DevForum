@@ -13,19 +13,20 @@ const Search = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const title = urlParams.get('title');
   const category = urlParams.get('category');
+  const page = urlParams.get('page');
 
   useEffect(() => {
-    api.post('search', { title, category }).then((response) => {
+    console.log('oi');
+    api.post('search', { title, category, page }).then((response) => {
       if (response.status === 250)
         return window.alert('No topics were found, try again :p');
       setTopics(response.data);
     });
-  }, [title, category]);
+  }, [title, category, page]);
 
   function handleCategory(e) {
-    if (title)
-      return history.push(`?title=${title}&category=${e.currentTarget.value}`);
-    return history.push(`?category=${e.currentTarget.value}`);
+    urlParams.set('category', e.currentTarget.value);
+    return history.push(`/search/?${urlParams}`);
   }
 
   return (
@@ -75,6 +76,7 @@ const Search = () => {
                 >
                   {topic.author.username}
                 </Link>
+                {topic.category}
                 <time dateTime={topic.date}>{getTimeAgo(topic.date)}</time>
               </span>
             </div>

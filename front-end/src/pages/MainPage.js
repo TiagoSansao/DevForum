@@ -9,7 +9,6 @@ import { getTimeAgo } from '../utils/getTimeAgo';
 const MainPage = () => {
   const history = useHistory();
   const [topics, setTopics] = useState([]);
-  const [category, setCategory] = useState(null);
 
   useEffect(() => {
     api.get(`topics`).then((res) => {
@@ -68,10 +67,10 @@ const MainPage = () => {
           })}
         </section>
       </section>
-      <Link to={`/`}>
+      <Link to={`/search/?page=1`}>
         <a>1</a>
       </Link>
-      <Link to={`/2`}>
+      <Link to={`/search/?page=2`}>
         <a>2</a>
       </Link>
       <Footer />
