@@ -13,7 +13,7 @@ const Search = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const title = urlParams.get('title');
   const category = urlParams.get('category');
-  const page = urlParams.get('page');
+  const page = parseInt(urlParams.get('page'));
 
   useEffect(() => {
     console.log('oi');
@@ -29,9 +29,19 @@ const Search = () => {
     return history.push(`/search/?${urlParams}`);
   }
 
+  function handlePagination(clickedPage) {
+    if (clickedPage < 1)
+      return window.alert('You are already on the first page!');
+    urlParams.set('page', clickedPage);
+    return history.push(`/search/?${urlParams}`);
+  }
+
   return (
     <main className='fullscreen'>
       <Header />
+      <Link to={'/create'} className='newTopic'>
+        <p>Create a topic</p>
+      </Link>
       <section className='topics'>
         <section className='topDiv'>
           <h2>
@@ -83,9 +93,14 @@ const Search = () => {
           );
         })}
       </section>
-      <Link to={'/create'} className='newTopic'>
-        <p>Create a topic</p>
-      </Link>
+      <section className='pagination'>
+        <a onClick={() => handlePagination(page - 1)}>
+          <i className='fa fa-arrow-left' aria-hidden='true'></i> previous page
+        </a>
+        <a onClick={() => handlePagination(page + 1)}>
+          next page <i className='fa fa-arrow-right' aria-hidden='true'></i>
+        </a>
+      </section>
       <Footer />
     </main>
   );
