@@ -21,6 +21,9 @@ const MainPage = () => {
   return (
     <main className='fullscreen'>
       <Header />
+      <Link to={'/create'} className='newTopic'>
+        <p>Create a topic</p>
+      </Link>
       <section style={{ display: 'block' }}>
         <section className='topics'>
           <section className='topDiv'>
@@ -65,8 +68,11 @@ const MainPage = () => {
           })}
         </section>
       </section>
-      <Link to={'/create'} className='newTopic'>
-        <p>Create a topic</p>
+      <Link to={`/`}>
+        <a>1</a>
+      </Link>
+      <Link to={`/2`}>
+        <a>2</a>
       </Link>
       <Footer />
     </main>

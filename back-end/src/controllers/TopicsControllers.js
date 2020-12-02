@@ -36,9 +36,10 @@ const getTopicsWithFilters = (req, res) => {
     regEx = new RegExp('.*' + title + '.*');
   }
   if (category === 'C  /C/C') category = 'C++/C/C#';
-  if (!title && !category) return res.status(250).send('No topics were found.');
   Topic.find(
-    !title || !category
+    !title && !category
+      ? {}
+      : !title || !category
       ? !title
         ? { category: category }
         : { title: regEx }

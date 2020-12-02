@@ -90,7 +90,7 @@
 .newTopic {
   max-width: 800px;
   width: 100%;
-  margin: 5px auto 15px auto;
+  margin: 15px auto 0px auto;
   position: relative;
   background-color: #01012b;
   color: white;
