@@ -43,7 +43,7 @@
   <hr/>
 
   <div align="center" id="preview">
-    <h3 align="center">Preview</h3>
+    <h3 align="center">👀 Preview</h3>
     <img width='350px' src="./front-end/src/assets/preview02.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
     <img width='350px' src="./front-end/src/assets/preview01.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
     <img width='350px' src="./front-end/src/assets/preview03.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
