@@ -68,7 +68,9 @@ const Settings = () => {
       const response = await api.put('setPhoto', data, header);
       return setPhotoResponse(response.data);
     } catch (err) {
-      return setPhotoResponse('Only JPG, JPEG and PNG files are accepted.');
+      return setPhotoResponse(
+        'Only JPG, JPEG and PNG files until 5MB are accepted.'
+      );
     }
   }
 

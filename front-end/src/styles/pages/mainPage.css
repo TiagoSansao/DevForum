@@ -114,6 +114,7 @@
 .pagination {
   display: flex;
   margin: auto;
+
   max-width: 800px;
   width: 100%;
   justify-content: space-around;

@@ -62,7 +62,7 @@
 }
 
 .singleTopic aside {
-  height: 200px;
+  height: 220px;
   background-color: #31198a;
   grid-area: aside;
   border-radius: 0px 15px 15px 0px;
@@ -82,8 +82,8 @@
 }
 
 .singleTopic aside img {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
 }
 
 .singleTopic main {

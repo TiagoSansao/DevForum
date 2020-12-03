@@ -70,7 +70,14 @@ const Topic = () => {
           <Link to={`/user/${topic.author.username}`} className='authorName'>
             {topic.author.username}
           </Link>
-          <img src={defaultUserImage} alt='' />
+          <img
+            src={
+              topic.author.imgKey
+                ? `http://localhost:3500/uploads/${topic.author.imgKey}`
+                : defaultUserImage
+            }
+            alt='user'
+          />
           <div className='personInfo'>
             <span>
               Register: {new Date(topic.author.registerDate).getMonth()}/
@@ -97,7 +104,14 @@ const Topic = () => {
               >
                 {reply.author.username}
               </Link>
-              <img src={defaultUserImage} alt='' />
+              <img
+                src={
+                  reply.author.imgKey
+                    ? `http://localhost:3500/uploads/${reply.author.imgKey}`
+                    : defaultUserImage
+                }
+                alt='user'
+              />
               <div className='personInfo'>
                 <span>
                   Register: {new Date(reply.author.registerDate).getMonth()}/
