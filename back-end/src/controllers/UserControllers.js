@@ -1,4 +1,6 @@
 import User from '../models/User.js';
+import fs from 'fs';
+import path from 'path';
 
 const getUser = async (req, res) => {
   User.findOne(
@@ -27,19 +29,41 @@ const setDescription = async (req, res) => {
 const setPhoto = async (req, res) => {
   const { _id } = req.body;
   const user = await User.findById(_id);
+  let previousImg = null;
+  if (user.imgKey) previousImg = user.imgKey;
   user.imgKey = req.file.filename;
   const response = await user.save();
-  if (response) return res.status(200).send('Image updated successfully');
+  if (response) {
+    console.log(previousImg);
+    if (previousImg)
+      fs.unlink(
+        path.join(path.dirname(''), 'public', 'uploads', previousImg),
+        (err) => {
+          if (err) console.log(err);
+        }
+      );
+    return res.status(200).send('Image updated successfully');
+  }
   res.status(250).send('Something went wrong.');
 };
 
 const deletePhoto = async (req, res) => {
-  const response = await User.findByIdAndUpdate(
-    req.body._id,
-    { imgKey: '' },
-    { useFindAndModify: true }
-  );
-  if (response) return res.status(200).send('Image removed successfully.');
+  const user = await User.findById(req.body._id);
+  let previousImg = null;
+  if (user.imgKey) previousImg = user.imgKey;
+  user.imgKey = '';
+  const response = await user.save();
+  console.log(path.dirname(''));
+  if (response) {
+    if (previousImg)
+      fs.unlink(
+        path.join(path.dirname(''), 'public', 'uploads', previousImg),
+        (err) => {
+          if (err) console.log(err);
+        }
+      );
+    return res.status(200).send('Image removed successfully.');
+  }
   res.status(250).send('Something went wrong.');
 };
 
