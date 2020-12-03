@@ -44,10 +44,10 @@
 
   <div align="center" id="preview">
     <h3 align="center">👀 Preview</h3>
-    <img width='400px' src="./front-end/src/assets/preview02.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
-    <img width='400px' src="./front-end/src/assets/preview01.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
-    <img width='400px' src="./front-end/src/assets/preview03.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
-    <img width='400px' src="./front-end/src/assets/preview04.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
+    <img width='390px' src="./front-end/src/assets/preview02.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
+    <img width='390px' src="./front-end/src/assets/preview01.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
+    <img width='390px' src="./front-end/src/assets/preview03.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
+    <img width='390px' src="./front-end/src/assets/preview04.png" alt="GIF showing the app"> &nbsp;&nbsp;&nbsp;&nbsp;
   </div>
 
   <hr/>
