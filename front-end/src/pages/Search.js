@@ -83,7 +83,7 @@ const Search = () => {
               <span className='topicInfo'>
                 <Link
                   className='authorName'
-                  to={`user/${topic.author.username}`}
+                  to={`/user/${topic.author.username}`}
                 >
                   {topic.author.username}
                 </Link>
