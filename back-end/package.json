@@ -12,7 +12,7 @@
     "express": "^4.17.1",
     "express-openid-connect": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.13",
+    "mongoose": "^5.13.14",
     "multer": "^1.4.2"
   },
   "devDependencies": {
